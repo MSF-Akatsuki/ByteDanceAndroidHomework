@@ -10,6 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        public val problemContents : ProblemContents = ProblemContents()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -19,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
 
         val adapter = MainAdapter()
-        val data = (1..100).map { Pair<String,String>("这是第${it}个标题","这是一句话") }
+        val data = (1..100).map { problemContents.getAbstractById(it) }
         adapter.setContentList(data)
         rv.adapter = adapter
 /*
