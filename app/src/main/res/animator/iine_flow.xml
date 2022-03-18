@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <objectAnimator
+        android:duration="1500"
+        android:valueFrom="1.0"
+        android:valueTo="1.2"
+        android:propertyName="scaleX"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:repeatMode="reverse"
+        android:repeatCount="1"
+        />
+
+    <objectAnimator
+        android:duration="1500"
+        android:valueFrom="1.0"
+        android:valueTo="1.2"
+        android:propertyName="scaleY"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:repeatMode="reverse"
+        android:repeatCount="1"
+        />
+
+    <objectAnimator
+        android:duration="100"
+        android:propertyName="rotation"
+        android:valueFrom="0"
+        android:valueTo="15"
+        android:repeatMode="reverse"
+        android:repeatCount="29"
+        />
+
+</set>
