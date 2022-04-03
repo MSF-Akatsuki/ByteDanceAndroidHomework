@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread {
                 txtDispTranslate?.text?.clear()
                 txtDispTranslate?.text?.append("HttpFailure")
+                Log.println(Log.WARN,"httperror",e.toString())
             }
         }
 
