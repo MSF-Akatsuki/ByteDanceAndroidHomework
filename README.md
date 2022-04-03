@@ -65,3 +65,5 @@ mitmproxy -p 1837
 ipv6.addr eq 2403:d400:1400:2fd:3dbc:3718:97df:749 and ipv6.addr eq 2408:8706:0:5e05:123:123:219:80 and tls
 ```
 然后导出对应的项目，可得到对应的包。
+
+导出的数据存放于 /pcapng
