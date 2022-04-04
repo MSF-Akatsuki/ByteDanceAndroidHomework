@@ -19,31 +19,42 @@ import kotlin.math.sin
 
 class ClockTicksView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    fun onTimeChanged() {
-        val now = System.currentTimeMillis()
+    var now : Long = 0
+    var latestSystemMillis : Long = 0
 
+    fun onTimeChanged() {
+        val currentSystemMillis = System.currentTimeMillis()
+        now = currentSystemMillis - latestSystemMillis + now
+        latestSystemMillis = currentSystemMillis
 
         val secs = now / 1000
         val mins = secs / 60
         val hrs = mins / 60
 
-        seconds = (secs % 60).toInt()
-        minutes = (mins % 60).toInt()
-        hours = (hrs % 24).toInt()
+        seconds = secs % 60
+        minutes = mins % 60
+        hours = hrs % 24
         Log.println(Log.INFO,null,"Tick" + hours + ":" + minutes + ":" + seconds)
-        invalidate()
+        // invalidate()
     }
 
     /* Reference : android.widget.TextClock */
     private val mTicker : Runnable = object : Runnable{
         override fun run(){
-            handler.removeCallbacksAndMessages(null)
+            handler.removeCallbacksAndMessages(this)
             val now = SystemClock.uptimeMillis()
             val next = now + (1000 - now % 1000)
-
             onTimeChanged()
+            handler.postAtTime(this, next)
+        }
+    }
 
-
+    private val iTicker : Runnable = object : Runnable{
+        override fun run() {
+            handler.removeCallbacksAndMessages(this)
+            val now = SystemClock.uptimeMillis()
+            val next = now + (20 - now % 20)
+            invalidate()
             handler.postAtTime(this, next)
         }
     }
@@ -54,9 +65,9 @@ class ClockTicksView(context: Context, attrs: AttributeSet) : View(context, attr
     private val bounds = RectF()
 
 
-    var seconds = 7
-    var minutes = 53
-    var hours = 13
+    var seconds:Long = 7
+    var minutes:Long = 53
+    var hours:Long = 13
 
     init {
         paintSec.isAntiAlias = true
@@ -74,10 +85,12 @@ class ClockTicksView(context: Context, attrs: AttributeSet) : View(context, attr
         paintHour.color = Color.parseColor("#3F007F")
         paintHour.strokeWidth = 7F
 
-
+        now = System.currentTimeMillis()
+        latestSystemMillis = now
         onTimeChanged()
         val handler : Handler = Handler(Looper.getMainLooper())
         handler.postDelayed(mTicker,200)
+        handler.postDelayed(iTicker,200)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -115,7 +128,41 @@ class ClockTicksView(context: Context, attrs: AttributeSet) : View(context, attr
         }
     }
 
+    override fun performClick(): Boolean {
+        return super.performClick()
+    }
 
+    fun getRadius():Float=if (width<height) width / 2F else height / 2F
 
+    fun setHourByAngle(angle : Float) {
+        val secs = now / 1000
+        val mins = secs / 60
+        val hrs = mins / 60
 
+        seconds = secs % 60
+        minutes = mins % 60
+        hours = hrs % 24
+
+        hours = (angle / 30 + 0.5).toLong()
+
+        now = hours *3600*1000 + mins * 60 * 1000 + secs * 1000
+    }
+
+    fun setTimeByAngle(angle : Float, holdTarget: MainActivity.HoldTarget) {
+        val secs = now / 1000
+        val mins = secs / 60
+        val hrs = mins / 60
+
+        seconds = (secs % 60).toLong()
+        minutes = (mins % 60).toLong()
+        hours = (hrs % 24).toLong()
+
+        when (holdTarget) {
+            MainActivity.HoldTarget.SECOND -> seconds = ((angle / PI + 2) * 180 / 6 + 0.5).toLong() % 60
+            MainActivity.HoldTarget.MINUTE -> minutes = ((angle / PI + 2) * 180 / 6 + 0.5).toLong() % 60
+            MainActivity.HoldTarget.HOUR -> hours = ((angle / PI + 2) * 180 / 30 + 0.5).toLong() % 12
+        }
+
+        now = hours *3600*1000 + minutes * 60 * 1000 + seconds * 1000
+    }
 }
