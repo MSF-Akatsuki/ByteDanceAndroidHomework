@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/FirstFragment"
+        android:icon="@android:drawable/arrow_up_float"
+        android:title="TODO"
+        />
+
+    <item
+        android:id="@+id/SecondFragment"
+        android:icon="@android:drawable/arrow_up_float"
+        android:title="DONE"
+        />
+
+</menu>
