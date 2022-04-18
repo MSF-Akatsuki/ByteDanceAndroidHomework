@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VideoPlayerFragment"
+    android:background="@color/black">
+
+    <!-- TODO: Update blank fragment layout -->
+    <VideoView
+        android:id="@+id/view_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+    <LinearLayout
+        android:id="@+id/video_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:gravity="end"
+        android:background="@color/white">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/btn_media_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_baseline_play_circle_filled_24"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/btn_media_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_baseline_pause_circle_filled_24"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/btn_media_replay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_baseline_replay_24"/>
+
+        <com.bytedance.jstu.homework.ProgressBarView
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</FrameLayout>
